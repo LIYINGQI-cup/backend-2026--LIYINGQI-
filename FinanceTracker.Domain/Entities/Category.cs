@@ -10,6 +10,5 @@ public class Category
     public OperationType Type { get; set; }
     public bool IsSystem { get; set; }
 
-    public User? User { get; set; }
     public ICollection<Operation> Operations { get; set; } = new List<Operation>();
 }

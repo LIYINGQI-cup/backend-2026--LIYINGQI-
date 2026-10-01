@@ -125,3 +125,13 @@ C:\Users\73261\Documents\backend-2026--LIYINGQI-\FinanceTracker.Api\obj\Debug\ne
 C:\Users\73261\Documents\backend-2026--LIYINGQI-\FinanceTracker.Api\obj\Debug\net10.0\FinanceTracker.Api.pdb
 C:\Users\73261\Documents\backend-2026--LIYINGQI-\FinanceTracker.Api\obj\Debug\net10.0\FinanceTracker.Api.genruntimeconfig.cache
 C:\Users\73261\Documents\backend-2026--LIYINGQI-\FinanceTracker.Api\obj\Debug\net10.0\ref\FinanceTracker.Api.dll
+C:\Users\73261\Documents\backend-2026--LIYINGQI-\FinanceTracker.Api\bin\Debug\net10.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\73261\Documents\backend-2026--LIYINGQI-\FinanceTracker.Api\bin\Debug\net10.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\Users\73261\Documents\backend-2026--LIYINGQI-\FinanceTracker.Api\bin\Debug\net10.0\Microsoft.Bcl.Cryptography.dll
+C:\Users\73261\Documents\backend-2026--LIYINGQI-\FinanceTracker.Api\bin\Debug\net10.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\73261\Documents\backend-2026--LIYINGQI-\FinanceTracker.Api\bin\Debug\net10.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\73261\Documents\backend-2026--LIYINGQI-\FinanceTracker.Api\bin\Debug\net10.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\73261\Documents\backend-2026--LIYINGQI-\FinanceTracker.Api\bin\Debug\net10.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\73261\Documents\backend-2026--LIYINGQI-\FinanceTracker.Api\bin\Debug\net10.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\73261\Documents\backend-2026--LIYINGQI-\FinanceTracker.Api\bin\Debug\net10.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\73261\Documents\backend-2026--LIYINGQI-\FinanceTracker.Api\bin\Debug\net10.0\System.IdentityModel.Tokens.Jwt.dll

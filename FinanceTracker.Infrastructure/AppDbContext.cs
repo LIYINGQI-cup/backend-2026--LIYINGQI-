@@ -1,15 +1,16 @@
 ﻿using FinanceTracker.Domain.Entities;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace FinanceTracker.Infrastructure;
 
-public class AppDbContext : DbContext
+public class AppDbContext : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>
 {
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
     {
     }
 
-    public DbSet<User> Users => Set<User>();
     public DbSet<Account> Accounts => Set<Account>();
     public DbSet<Category> Categories => Set<Category>();
     public DbSet<Operation> Operations => Set<Operation>();
@@ -19,12 +20,8 @@ public class AppDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.Entity<User>(e =>
+        modelBuilder.Entity<ApplicationUser>(e =>
         {
-            e.HasKey(x => x.Id);
-            e.Property(x => x.Email).IsRequired().HasMaxLength(256);
-            e.HasIndex(x => x.Email).IsUnique();
-            e.Property(x => x.PasswordHash).IsRequired();
             e.Property(x => x.Name).IsRequired().HasMaxLength(100);
         });
 
@@ -34,8 +31,8 @@ public class AppDbContext : DbContext
             e.Property(x => x.Name).IsRequired().HasMaxLength(100);
             e.Property(x => x.Currency).IsRequired().HasMaxLength(3);
             e.Property(x => x.StartAmount).HasColumnType("numeric(18,2)");
-            e.HasOne(x => x.User)
-                .WithMany(u => u.Accounts)
+            e.HasOne<ApplicationUser>()
+                .WithMany()
                 .HasForeignKey(x => x.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
         });
@@ -45,8 +42,8 @@ public class AppDbContext : DbContext
             e.HasKey(x => x.Id);
             e.Property(x => x.Name).IsRequired().HasMaxLength(50);
             e.Property(x => x.Type).HasConversion<string>();
-            e.HasOne(x => x.User)
-                .WithMany(u => u.Categories)
+            e.HasOne<ApplicationUser>()
+                .WithMany()
                 .HasForeignKey(x => x.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
             e.HasIndex(x => new { x.UserId, x.Name, x.Type }).IsUnique();

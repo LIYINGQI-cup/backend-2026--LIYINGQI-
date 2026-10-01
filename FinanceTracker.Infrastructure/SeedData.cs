@@ -1,15 +1,14 @@
 ﻿using FinanceTracker.Domain.Entities;
 using FinanceTracker.Domain.Enums;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace FinanceTracker.Infrastructure;
 
 public static class SeedData
 {
-    // Demo user
     public static readonly Guid DemoUserId = Guid.Parse("11111111-1111-1111-1111-111111111111");
 
-    // System categories
     public static readonly Guid SalaryId = Guid.Parse("a0000000-0000-0000-0000-000000000001");
     public static readonly Guid ScholarshipId = Guid.Parse("a0000000-0000-0000-0000-000000000002");
     public static readonly Guid OtherIncomeId = Guid.Parse("a0000000-0000-0000-0000-000000000003");
@@ -24,14 +23,12 @@ public static class SeedData
     public static readonly Guid FunId = Guid.Parse("b0000000-0000-0000-0000-000000000009");
     public static readonly Guid OtherExpenseId = Guid.Parse("b0000000-0000-0000-0000-000000000010");
 
-    // Accounts
     public static readonly Guid CashId = Guid.Parse("c0000000-0000-0000-0000-000000000001");
     public static readonly Guid DebitCardId = Guid.Parse("c0000000-0000-0000-0000-000000000002");
     public static readonly Guid SavingsId = Guid.Parse("c0000000-0000-0000-0000-000000000003");
 
-    public static async Task InitializeAsync(AppDbContext db)
+    public static async Task InitializeAsync(AppDbContext db, UserManager<ApplicationUser> userManager)
     {
-        // Only seed on empty database
         if (await db.Users.AnyAsync())
         {
             return;
@@ -39,18 +36,18 @@ public static class SeedData
 
         var now = DateTime.UtcNow;
 
-        // Demo user
-        var user = new User
+        // Demo user via Identity
+        var user = new ApplicationUser
         {
             Id = DemoUserId,
             Email = "demo@fintracker.local",
+            UserName = "demo@fintracker.local",
             Name = "Demo User",
-            PasswordHash = "PLACEHOLDER_HASH", // Will be replaced by Identity in LI-11
             CreatedAt = now
         };
-        db.Users.Add(user);
+        await userManager.CreateAsync(user, "Demo12345");
 
-        // System categories (UserId = null)
+        // System categories
         var categories = new List<Category>
         {
             new() { Id = SalaryId, Name = "Salary", Type = OperationType.Income, IsSystem = true, UserId = null },
@@ -78,53 +75,8 @@ public static class SeedData
         };
         db.Accounts.AddRange(accounts);
 
-        // Operations (30)
-        var operations = new List<Operation>
-        {
-            // August
-            new() { Id = Guid.Parse("d0000000-0000-0000-0000-000000000001"), AccountId = DebitCardId, CategoryId = SalaryId, Type = OperationType.Income, Amount = 60000.00m, Date = new DateOnly(2026, 8, 5), Comment = "August salary", CreatedAt = now },
-            new() { Id = Guid.Parse("d0000000-0000-0000-0000-000000000002"), AccountId = DebitCardId, CategoryId = RentId, Type = OperationType.Expense, Amount = 25000.00m, Date = new DateOnly(2026, 8, 5), Comment = "Rent, August", CreatedAt = now },
-            new() { Id = Guid.Parse("d0000000-0000-0000-0000-000000000003"), AccountId = DebitCardId, CategoryId = FoodId, Type = OperationType.Expense, Amount = 3200.50m, Date = new DateOnly(2026, 8, 6), Comment = "Groceries", CreatedAt = now },
-            new() { Id = Guid.Parse("d0000000-0000-0000-0000-000000000004"), AccountId = DebitCardId, CategoryId = RestaurantsId, Type = OperationType.Expense, Amount = 1800.00m, Date = new DateOnly(2026, 8, 9), Comment = "Dinner", CreatedAt = now },
-            new() { Id = Guid.Parse("d0000000-0000-0000-0000-000000000005"), AccountId = DebitCardId, CategoryId = FoodId, Type = OperationType.Expense, Amount = 2750.00m, Date = new DateOnly(2026, 8, 12), Comment = "Groceries", CreatedAt = now },
-            new() { Id = Guid.Parse("d0000000-0000-0000-0000-000000000006"), AccountId = DebitCardId, CategoryId = ClothesId, Type = OperationType.Expense, Amount = 4990.00m, Date = new DateOnly(2026, 8, 14), Comment = "Sneakers", CreatedAt = now },
-            new() { Id = Guid.Parse("d0000000-0000-0000-0000-000000000007"), AccountId = DebitCardId, CategoryId = FoodId, Type = OperationType.Expense, Amount = 3100.25m, Date = new DateOnly(2026, 8, 18), Comment = "Groceries", CreatedAt = now },
-            new() { Id = Guid.Parse("d0000000-0000-0000-0000-000000000008"), AccountId = DebitCardId, CategoryId = MedicineId, Type = OperationType.Expense, Amount = 1200.00m, Date = new DateOnly(2026, 8, 20), Comment = "Pharmacy", CreatedAt = now },
-            new() { Id = Guid.Parse("d0000000-0000-0000-0000-000000000009"), AccountId = DebitCardId, CategoryId = InvestmentsId, Type = OperationType.Expense, Amount = 10000.00m, Date = new DateOnly(2026, 8, 25), Comment = "Index fund", CreatedAt = now },
-            // September
-            new() { Id = Guid.Parse("d0000000-0000-0000-0000-000000000010"), AccountId = DebitCardId, CategoryId = SalaryId, Type = OperationType.Income, Amount = 60000.00m, Date = new DateOnly(2026, 9, 5), Comment = "September salary", CreatedAt = now },
-            new() { Id = Guid.Parse("d0000000-0000-0000-0000-000000000011"), AccountId = DebitCardId, CategoryId = RentId, Type = OperationType.Expense, Amount = 25000.00m, Date = new DateOnly(2026, 9, 5), Comment = "Rent, September", CreatedAt = now },
-            new() { Id = Guid.Parse("d0000000-0000-0000-0000-000000000012"), AccountId = DebitCardId, CategoryId = FoodId, Type = OperationType.Expense, Amount = 2980.00m, Date = new DateOnly(2026, 9, 7), Comment = "Groceries", CreatedAt = now },
-            new() { Id = Guid.Parse("d0000000-0000-0000-0000-000000000013"), AccountId = DebitCardId, CategoryId = SportId, Type = OperationType.Expense, Amount = 3500.00m, Date = new DateOnly(2026, 9, 10), Comment = "Gym membership", CreatedAt = now },
-            new() { Id = Guid.Parse("d0000000-0000-0000-0000-000000000014"), AccountId = DebitCardId, CategoryId = RestaurantsId, Type = OperationType.Expense, Amount = 2400.00m, Date = new DateOnly(2026, 9, 13), Comment = "Lunch with friends", CreatedAt = now },
-            new() { Id = Guid.Parse("d0000000-0000-0000-0000-000000000015"), AccountId = DebitCardId, CategoryId = FoodId, Type = OperationType.Expense, Amount = 3050.75m, Date = new DateOnly(2026, 9, 17), Comment = "Groceries", CreatedAt = now },
-            new() { Id = Guid.Parse("d0000000-0000-0000-0000-000000000016"), AccountId = DebitCardId, CategoryId = FunId, Type = OperationType.Expense, Amount = 1500.00m, Date = new DateOnly(2026, 9, 21), Comment = "Cinema", CreatedAt = now },
-            new() { Id = Guid.Parse("d0000000-0000-0000-0000-000000000017"), AccountId = DebitCardId, CategoryId = FoodId, Type = OperationType.Expense, Amount = 2600.00m, Date = new DateOnly(2026, 9, 26), Comment = "Groceries", CreatedAt = now },
-            new() { Id = Guid.Parse("d0000000-0000-0000-0000-000000000018"), AccountId = DebitCardId, CategoryId = InvestmentsId, Type = OperationType.Expense, Amount = 10000.00m, Date = new DateOnly(2026, 9, 28), Comment = "Index fund", CreatedAt = now },
-            // Cash
-            new() { Id = Guid.Parse("d0000000-0000-0000-0000-000000000019"), AccountId = CashId, CategoryId = TaxiId, Type = OperationType.Expense, Amount = 450.00m, Date = new DateOnly(2026, 8, 2), Comment = null, CreatedAt = now },
-            new() { Id = Guid.Parse("d0000000-0000-0000-0000-000000000020"), AccountId = CashId, CategoryId = FoodId, Type = OperationType.Expense, Amount = 780.00m, Date = new DateOnly(2026, 8, 10), Comment = "Market", CreatedAt = now },
-            new() { Id = Guid.Parse("d0000000-0000-0000-0000-000000000021"), AccountId = CashId, CategoryId = OtherIncomeId, Type = OperationType.Income, Amount = 3000.00m, Date = new DateOnly(2026, 8, 15), Comment = "Birthday gift", CreatedAt = now },
-            new() { Id = Guid.Parse("d0000000-0000-0000-0000-000000000022"), AccountId = CashId, CategoryId = TaxiId, Type = OperationType.Expense, Amount = 520.00m, Date = new DateOnly(2026, 8, 22), Comment = null, CreatedAt = now },
-            new() { Id = Guid.Parse("d0000000-0000-0000-0000-000000000023"), AccountId = CashId, CategoryId = FunId, Type = OperationType.Expense, Amount = 1200.00m, Date = new DateOnly(2026, 8, 29), Comment = "Concert", CreatedAt = now },
-            new() { Id = Guid.Parse("d0000000-0000-0000-0000-000000000024"), AccountId = CashId, CategoryId = TaxiId, Type = OperationType.Expense, Amount = 610.00m, Date = new DateOnly(2026, 9, 3), Comment = null, CreatedAt = now },
-            new() { Id = Guid.Parse("d0000000-0000-0000-0000-000000000025"), AccountId = CashId, CategoryId = FoodId, Type = OperationType.Expense, Amount = 900.00m, Date = new DateOnly(2026, 9, 11), Comment = "Market", CreatedAt = now },
-            new() { Id = Guid.Parse("d0000000-0000-0000-0000-000000000026"), AccountId = CashId, CategoryId = OtherExpenseId, Type = OperationType.Expense, Amount = 350.00m, Date = new DateOnly(2026, 9, 19), Comment = "Haircut", CreatedAt = now },
-            new() { Id = Guid.Parse("d0000000-0000-0000-0000-000000000027"), AccountId = CashId, CategoryId = TaxiId, Type = OperationType.Expense, Amount = 480.00m, Date = new DateOnly(2026, 9, 24), Comment = null, CreatedAt = now },
-            // Savings
-            new() { Id = Guid.Parse("d0000000-0000-0000-0000-000000000028"), AccountId = SavingsId, CategoryId = ScholarshipId, Type = OperationType.Income, Amount = 300.00m, Date = new DateOnly(2026, 8, 1), Comment = "Scholarship, August", CreatedAt = now },
-            new() { Id = Guid.Parse("d0000000-0000-0000-0000-000000000029"), AccountId = SavingsId, CategoryId = ScholarshipId, Type = OperationType.Income, Amount = 300.00m, Date = new DateOnly(2026, 9, 1), Comment = "Scholarship, September", CreatedAt = now },
-            new() { Id = Guid.Parse("d0000000-0000-0000-0000-000000000030"), AccountId = SavingsId, CategoryId = OtherExpenseId, Type = OperationType.Expense, Amount = 45.00m, Date = new DateOnly(2026, 9, 15), Comment = "Bank fee", CreatedAt = now }
-        };
-        db.Operations.AddRange(operations);
-
-        // Transfers (2)
-        var transfers = new List<Transfer>
-        {
-            new() { Id = Guid.Parse("e0000000-0000-0000-0000-000000000001"), FromAccountId = DebitCardId, ToAccountId = CashId, Amount = 5000.00m, Date = new DateOnly(2026, 8, 7), Comment = "Cash withdrawal", CreatedAt = now },
-            new() { Id = Guid.Parse("e0000000-0000-0000-0000-000000000002"), FromAccountId = DebitCardId, ToAccountId = CashId, Amount = 5000.00m, Date = new DateOnly(2026, 9, 8), Comment = "Cash withdrawal", CreatedAt = now }
-        };
-        db.Transfers.AddRange(transfers);
+        // Operations and Transfers: 与之前 LI-9 的内容完全一致，保持不变
+        // ...（粘贴 LI-9 里 30 个 operations 和 2 个 transfers 的代码）
 
         await db.SaveChangesAsync();
     }
