@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "zm1uSmnaUzo=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\73261\\Documents\\backend-2026--LIYINGQI-\\FinanceTracker.Api\\FinanceTracker.Api.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\73261\\.nuget\\packages\\microsoft.aspnetcore.openapi\\9.0.10\\microsoft.aspnetcore.openapi.9.0.10.nupkg.sha512",
+    "C:\\Users\\73261\\.nuget\\packages\\microsoft.openapi\\1.6.17\\microsoft.openapi.1.6.17.nupkg.sha512"
+  ],
+  "logs": []
+}

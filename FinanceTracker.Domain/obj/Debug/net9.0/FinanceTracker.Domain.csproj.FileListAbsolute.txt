@@ -1,0 +1,12 @@
+C:\Users\73261\Documents\backend-2026--LIYINGQI-\FinanceTracker.Domain\bin\Debug\net9.0\FinanceTracker.Domain.deps.json
+C:\Users\73261\Documents\backend-2026--LIYINGQI-\FinanceTracker.Domain\bin\Debug\net9.0\FinanceTracker.Domain.dll
+C:\Users\73261\Documents\backend-2026--LIYINGQI-\FinanceTracker.Domain\bin\Debug\net9.0\FinanceTracker.Domain.pdb
+C:\Users\73261\Documents\backend-2026--LIYINGQI-\FinanceTracker.Domain\obj\Debug\net9.0\FinanceTracker.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\73261\Documents\backend-2026--LIYINGQI-\FinanceTracker.Domain\obj\Debug\net9.0\FinanceTracker.Domain.AssemblyInfoInputs.cache
+C:\Users\73261\Documents\backend-2026--LIYINGQI-\FinanceTracker.Domain\obj\Debug\net9.0\FinanceTracker.Domain.AssemblyInfo.cs
+C:\Users\73261\Documents\backend-2026--LIYINGQI-\FinanceTracker.Domain\obj\Debug\net9.0\FinanceTracker.Domain.csproj.CoreCompileInputs.cache
+C:\Users\73261\Documents\backend-2026--LIYINGQI-\FinanceTracker.Domain\obj\Debug\net9.0\FinanceTracker.Domain.sourcelink.json
+C:\Users\73261\Documents\backend-2026--LIYINGQI-\FinanceTracker.Domain\obj\Debug\net9.0\FinanceTracker.Domain.dll
+C:\Users\73261\Documents\backend-2026--LIYINGQI-\FinanceTracker.Domain\obj\Debug\net9.0\refint\FinanceTracker.Domain.dll
+C:\Users\73261\Documents\backend-2026--LIYINGQI-\FinanceTracker.Domain\obj\Debug\net9.0\FinanceTracker.Domain.pdb
+C:\Users\73261\Documents\backend-2026--LIYINGQI-\FinanceTracker.Domain\obj\Debug\net9.0\ref\FinanceTracker.Domain.dll
