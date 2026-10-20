@@ -1,0 +1,39 @@
+@baseUrl = http://localhost:5251
+
+### 1. Register a new user (expect 201 Created)
+POST {{baseUrl}}/api/auth/register
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "Password123",
+  "name": "Test User"
+}
+
+### 2. Register duplicate email (expect 409 Conflict)
+POST {{baseUrl}}/api/auth/register
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "Password123",
+  "name": "Test User"
+}
+
+### 3. Login with correct password (expect 200 OK)
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "Password123"
+}
+
+### 4. Login with wrong password (expect 401 Unauthorized)
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "WrongPassword1"
+}
