@@ -1,0 +1,27 @@
+@baseUrl = http://localhost:5251
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwMWExNThiYi0yMTAyLTcwYTUtYWEyNS0yNTg5YjhhODRlNWEiLCJlbWFpbCI6InRlc3RAZXhhbXBsZS5jb20iLCJuYW1lIjoiVGVzdCBVc2VyIiwianRpIjoiMzM5MjFmYWYtYWNhMS00YWEzLTkwNmMtMzlmODM2NmRiNWM3IiwiZXhwIjoxNzkyNjk4NDg3LCJpc3MiOiJGaW5hbmNlVHJhY2tlciIsImF1ZCI6IkZpbmFuY2VUcmFja2VyIn0.sQP3r_qDY5gKv_ZIF-BBMX0efAZphaT-brTolhfg5Wk
+
+### 1. Get current user (expect 200 OK)
+GET {{baseUrl}}/api/users/me
+Authorization: Bearer {{token}}
+
+### 2. Update current user name (expect 200 OK)
+PUT {{baseUrl}}/api/users/me
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "Updated Demo User"
+}
+
+### 3. Get without token (expect 401 Unauthorized)
+GET {{baseUrl}}/api/users/me
+
+### 4. Update with empty name (expect 400 Bad Request)
+PUT {{baseUrl}}/api/users/me
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": ""
+}
