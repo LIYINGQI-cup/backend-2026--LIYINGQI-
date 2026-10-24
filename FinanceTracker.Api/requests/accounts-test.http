@@ -1,0 +1,32 @@
+@baseUrl = http://localhost:5251
+@token =eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwMWExNmRlZS0xMzg3LTc1MTktODQ4Ni1kOGQyOWQxODE1NjUiLCJlbWFpbCI6InRlc3RAZXhhbXBsZS5jb20iLCJuYW1lIjoiVGVzdCBVc2VyIiwianRpIjoiNzk2ZGM4ODktNjZhMS00OGQ2LTg2ODMtNTVjNDczMGExMTEzIiwiZXhwIjoxNzkyODQ5NTI1LCJpc3MiOiJGaW5hbmNlVHJhY2tlciIsImF1ZCI6IkZpbmFuY2VUcmFja2VyIn0.kwUAgZBxH1WrHOftqMlJoW-_vXxZ_jQlhjUlUEFk0xQ
+
+### 1. Get all accounts (expect 200, check balances: Cash 12710.00, Debit card 48928.50, Savings 2055.00)
+GET {{baseUrl}}/api/accounts
+Authorization: Bearer {{token}}
+
+### 2. Create a new account (expect 201)
+POST {{baseUrl}}/api/accounts
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "Travel Fund",
+  "currency": "EUR",
+  "startAmount": 500
+}
+
+### 3. Create with invalid currency (expect 400)
+POST {{baseUrl}}/api/accounts
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "Bad Account",
+  "currency": "XYZ",
+  "startAmount": 100
+}
+
+### 4. Delete an account with operations (expect 409, using seed Debit Card ID)
+DELETE {{baseUrl}}/api/accounts/c0000000-0000-0000-0000-000000000002
+Authorization: Bearer {{token}}
