@@ -1,5 +1,5 @@
 @baseUrl = http://localhost:5251
-@token =eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwMWExNmRlZS0xMzg3LTc1MTktODQ4Ni1kOGQyOWQxODE1NjUiLCJlbWFpbCI6InRlc3RAZXhhbXBsZS5jb20iLCJuYW1lIjoiVGVzdCBVc2VyIiwianRpIjoiNzk2ZGM4ODktNjZhMS00OGQ2LTg2ODMtNTVjNDczMGExMTEzIiwiZXhwIjoxNzkyODQ5NTI1LCJpc3MiOiJGaW5hbmNlVHJhY2tlciIsImF1ZCI6IkZpbmFuY2VUcmFja2VyIn0.kwUAgZBxH1WrHOftqMlJoW-_vXxZ_jQlhjUlUEFk0xQ
+@token =eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwMWExNzI1ZC1iNzNkLTc0NjAtYWE3Ni1iNWQ1YzA5YmIxOTAiLCJlbWFpbCI6InRlc3RAZXhhbXBsZS5jb20iLCJuYW1lIjoiVGVzdCBVc2VyIiwianRpIjoiOWZhNDBmMTctYzBkNS00NWUyLWE4OGMtMWE1NjczMDYyOTQ4IiwiZXhwIjoxNzkyOTIzNzEwLCJpc3MiOiJGaW5hbmNlVHJhY2tlciIsImF1ZCI6IkZpbmFuY2VUcmFja2VyIn0.VtprXk_OAgLJ20nQOcKxDXmpGkEh8e_gyprVZ8xzXqk
 
 ### 1. Get all accounts (expect 200, check balances: Cash 12710.00, Debit card 48928.50, Savings 2055.00)
 GET {{baseUrl}}/api/accounts
@@ -29,4 +29,28 @@ Content-Type: application/json
 
 ### 4. Delete an account with operations (expect 409, using seed Debit Card ID)
 DELETE {{baseUrl}}/api/accounts/c0000000-0000-0000-0000-000000000002
+Authorization: Bearer {{token}}
+
+### 5. Update currency of account with operations (expect 409, R7)
+PUT {{baseUrl}}/api/accounts/c0000000-0000-0000-0000-000000000002
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "Debit card",
+  "currency": "USD",
+  "startAmount": 42000.00
+}
+
+### 6. Archive an account (expect 200 OK)
+PATCH {{baseUrl}}/api/accounts/c0000000-0000-0000-0000-000000000002/archive
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "isArchived": true
+}
+
+### 7. Delete an empty account (expect 204)
+DELETE {{baseUrl}}/api/accounts/83e9620e-dec9-4e21-9423-3d442b3b1313
 Authorization: Bearer {{token}}
