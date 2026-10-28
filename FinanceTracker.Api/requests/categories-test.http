@@ -1,0 +1,39 @@
+@baseUrl = http://localhost:5251
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwMWExNzI1ZC1iNzNkLTc0NjAtYWE3Ni1iNWQ1YzA5YmIxOTAiLCJlbWFpbCI6InRlc3RAZXhhbXBsZS5jb20iLCJuYW1lIjoiVGVzdCBVc2VyIiwianRpIjoiZWU0ZGM0NWItM2Y0ZS00ZDQ3LWFlOGYtYzMyNDg1MTc0NTMzIiwiZXhwIjoxNzkzMjA0NTA4LCJpc3MiOiJGaW5hbmNlVHJhY2tlciIsImF1ZCI6IkZpbmFuY2VUcmFja2VyIn0.9IqFdUZ0ua05A0OnvBj7bl-8De_ro3WQ-qo6daLt_nQ
+
+### 1. Get all categories (expect 200)
+GET {{baseUrl}}/api/categories
+Authorization: Bearer {{token}}
+
+### 2. Create a new category (expect 201)
+POST {{baseUrl}}/api/categories
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "Books",
+  "type": "Expense"
+}
+
+### 3. Create duplicate category (expect 409, R10)
+POST {{baseUrl}}/api/categories
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "books",
+  "type": "Expense"
+}
+
+### 4. Rename a system category (expect 403, R11)
+PUT {{baseUrl}}/api/categories/b0000000-0000-0000-0000-000000000001
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "Hacked Food"
+}
+
+### 5. Delete a category used by operations (expect 409, R12, using seed Food ID)
+DELETE {{baseUrl}}/api/categories/b0000000-0000-0000-0000-000000000001
+Authorization: Bearer {{token}}
