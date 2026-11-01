@@ -1,0 +1,50 @@
+@baseUrl = http://localhost:5251
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwMWExNzI1ZC1iNzNkLTc0NjAtYWE3Ni1iNWQ1YzA5YmIxOTAiLCJlbWFpbCI6InRlc3RAZXhhbXBsZS5jb20iLCJuYW1lIjoiVGVzdCBVc2VyIiwianRpIjoiNTIxYzhjMmYtOGM1OC00MDg3LTkwMzctY2RhYzE5YjIwYzE3IiwiZXhwIjoxNzkzNTQzNTYyLCJpc3MiOiJGaW5hbmNlVHJhY2tlciIsImF1ZCI6IkZpbmFuY2VUcmFja2VyIn0.o_mCyoua1Rt1BefjBzhA0pY58eH6yLyOZjPoti-NYVs
+
+### 1. Get operations (expect 200, paged)
+GET {{baseUrl}}/api/operations?page=1&pageSize=5
+Authorization: Bearer {{token}}
+
+### 2. Get operations filtered by date (expect 200, only September)
+GET {{baseUrl}}/api/operations?from=2026-09-01&to=2026-09-30
+Authorization: Bearer {{token}}
+
+### 3. Create an operation (expect 201)
+POST {{baseUrl}}/api/operations
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "accountId": "c0000000-0000-0000-0000-000000000002",
+  "categoryId": "b0000000-0000-0000-0000-000000000001",
+  "type": "Expense",
+  "amount": 1250.00,
+  "date": "2026-10-05",
+  "comment": "Groceries"
+}
+
+### 4. R4 — Date in the future (expect 400)
+POST {{baseUrl}}/api/operations
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "accountId": "c0000000-0000-0000-0000-000000000002",
+  "categoryId": "b0000000-0000-0000-0000-000000000001",
+  "type": "Expense",
+  "amount": 10.00,
+  "date": "2027-01-01"
+}
+
+### 5. R3 — Wrong category type (expect 400)
+POST {{baseUrl}}/api/operations
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "accountId": "c0000000-0000-0000-0000-000000000002",
+  "categoryId": "a0000000-0000-0000-0000-000000000001",
+  "type": "Expense",
+  "amount": 100.00,
+  "date": "2026-10-01"
+}
