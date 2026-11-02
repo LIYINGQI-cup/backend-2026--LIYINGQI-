@@ -1,0 +1,55 @@
+@baseUrl = http://localhost:5251
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMTExMTExMS0xMTExLTExMTEtMTExMS0xMTExMTExMTExMTEiLCJlbWFpbCI6ImRlbW9AZmludHJhY2tlci5sb2NhbCIsIm5hbWUiOiJEZW1vIFVzZXIiLCJqdGkiOiIwZGJkNzZlMi1kYWVmLTQzY2ItYmZjMC0zZGUwNmI4NGM1NWMiLCJleHAiOjE3OTM2MjQ1MzksImlzcyI6IkZpbmFuY2VUcmFja2VyIiwiYXVkIjoiRmluYW5jZVRyYWNrZXIifQ.jw9eN12SMxpGauGC9xRPQEhAIQrTDLdb50PfqUabZSU
+
+### 1. Valid transfer (expect 201 Created)
+POST {{baseUrl}}/api/transfers
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "fromAccountId": "c0000000-0000-0000-0000-000000000002",
+  "toAccountId": "c0000000-0000-0000-0000-000000000001",
+  "amount": 100.00,
+  "date": "2026-10-01",
+  "comment": "Testing transfer"
+}
+
+### 2. R8 - Transfer to the same account (expect 400 Bad Request)
+POST {{baseUrl}}/api/transfers
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "fromAccountId": "c0000000-0000-0000-0000-000000000002",
+  "toAccountId": "c0000000-0000-0000-0000-000000000002",
+  "amount": 100.00,
+  "date": "2026-10-01"
+}
+
+### 3. R8 - Transfer between different currencies (expect 400 Bad Request)
+POST {{baseUrl}}/api/transfers
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "fromAccountId": "c0000000-0000-0000-0000-000000000002",
+  "toAccountId": "c0000000-0000-0000-0000-000000000003",
+  "amount": 100.00,
+  "date": "2026-10-01"
+}
+
+### 4. R4 - Transfer with a future date (expect 400 Bad Request)
+POST {{baseUrl}}/api/transfers
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "fromAccountId": "c0000000-0000-0000-0000-000000000002",
+  "toAccountId": "c0000000-0000-0000-0000-000000000001",
+  "amount": 100.00,
+  "date": "2027-01-01"
+}
+
+### 5. List transfers with paging (expect 200 OK)
+GET {{baseUrl}}/api/transfers?page=1&pageSize=5
+Authorization: Bearer {{token}}
