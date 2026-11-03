@@ -1,0 +1,18 @@
+@baseUrl = http://localhost:5251
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMTExMTExMS0xMTExLTExMTEtMTExMS0xMTExMTExMTExMTEiLCJlbWFpbCI6ImRlbW9AZmludHJhY2tlci5sb2NhbCIsIm5hbWUiOiJEZW1vIFVzZXIiLCJqdGkiOiIwZGJkNzZlMi1kYWVmLTQzY2ItYmZjMC0zZGUwNmI4NGM1NWMiLCJleHAiOjE3OTM2MjQ1MzksImlzcyI6IkZpbmFuY2VUcmFja2VyIiwiYXVkIjoiRmluYW5jZVRyYWNrZXIifQ.jw9eN12SMxpGauGC9xRPQEhAIQrTDLdb50PfqUabZSU
+
+### 1. RUB September 2026 (expect exact totals: 60000.00 / 53370.75 / 6629.25)
+GET {{baseUrl}}/api/statistics?currency=RUB&from=2026-09-01&to=2026-09-30&groupBy=day
+Authorization: Bearer {{token}}
+
+### 2. Debit Card August 2026 (expect exact totals: 60000.00 / 52040.75 / 7959.25)
+GET {{baseUrl}}/api/statistics?accountId=c0000000-0000-0000-0000-000000000002&from=2026-08-01&to=2026-08-31&groupBy=month
+Authorization: Bearer {{token}}
+
+### 3. Validation - Both accountId and currency provided (expect 400)
+GET {{baseUrl}}/api/statistics?currency=RUB&accountId=c0000000-0000-0000-0000-000000000002&from=2026-09-01&to=2026-09-30
+Authorization: Bearer {{token}}
+
+### 4. Validation - Period exceeds 366 days (expect 400)
+GET {{baseUrl}}/api/statistics?currency=RUB&from=2024-01-01&to=2026-01-01
+Authorization: Bearer {{token}}
