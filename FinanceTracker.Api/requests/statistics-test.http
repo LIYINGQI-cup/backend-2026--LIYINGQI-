@@ -16,3 +16,11 @@ Authorization: Bearer {{token}}
 ### 4. Validation - Period exceeds 366 days (expect 400)
 GET {{baseUrl}}/api/statistics?currency=RUB&from=2024-01-01&to=2026-01-01
 Authorization: Bearer {{token}}
+
+### 5. Verify byCategory for Debit Card in August (expect totalExpense = 52040.75)
+GET {{baseUrl}}/api/statistics?accountId=c0000000-0000-0000-0000-000000000002&from=2026-08-01&to=2026-08-31
+Authorization: Bearer {{token}}
+
+### 6. Verify Savings account aggregation for Aug-Sep (expect totalIncome = 600.00, totalExpense = 45.00)
+GET {{baseUrl}}/api/statistics?accountId=c0000000-0000-0000-0000-000000000003&from=2026-08-01&to=2026-09-30
+Authorization: Bearer {{token}}
