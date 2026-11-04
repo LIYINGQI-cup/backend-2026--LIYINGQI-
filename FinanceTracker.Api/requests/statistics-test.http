@@ -24,3 +24,7 @@ Authorization: Bearer {{token}}
 ### 6. Verify Savings account aggregation for Aug-Sep (expect totalIncome = 600.00, totalExpense = 45.00)
 GET {{baseUrl}}/api/statistics?accountId=c0000000-0000-0000-0000-000000000003&from=2026-08-01&to=2026-09-30
 Authorization: Bearer {{token}}
+
+### 7. Verify timeline grouped by month (expect period like "2026-09")
+GET {{baseUrl}}/api/statistics?currency=RUB&from=2026-09-01&to=2026-09-30&groupBy=month
+Authorization: Bearer {{token}}
